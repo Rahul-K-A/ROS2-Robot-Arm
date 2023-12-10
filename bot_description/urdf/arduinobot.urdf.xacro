@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
+    <xacro:property name="PI" value="3.1415" />
+    <!-- Not sure what exactly it is, but looks to be maximum torque that controller can use to move the robot -->
+    <xacro:property name="effort" value="3.1415" />
+    <!-- For revolute joints, velocity in rads/s. For prismatic, velocity is in m/s -->
+    <xacro:property name="velocity" value="3.1415" />
+
+    
+    
+    
+    <link name="World"/>
+    
+    <link name="base_link">
+        <visual>
+            <origin xyz="-0.5 -0.5 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://bot_description/meshes/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="-0.5 -0.5 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://bot_description/meshes/basement.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="base_plate">
+        <visual>
+            <origin xyz="-0.39 -0.39 -0.56" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://bot_description/meshes/base_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+            <material name="">
+                <color rgba="1.0 0.0 0.0 1.0"/>
+                <texture filename=""/>
+            </material>
+        </visual>
+        <collision>
+            <origin xyz="-0.39 -0.39 -0.56" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://bot_description/meshes/base_plate.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
+    <joint name="joint_1" type="fixed">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="World"/>
+        <child link="base_link"/>
+    </joint>
+
+    <joint name="joint_2" type="revolute">
+        <origin xyz="0.0 0.0 0.307" rpy="0.0 0.0 0.0"/>
+        <parent link="base_link"/>
+        <child link="base_plate"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="1.0" velocity="10.0"/>
+    </joint>
+    
+</robot>
