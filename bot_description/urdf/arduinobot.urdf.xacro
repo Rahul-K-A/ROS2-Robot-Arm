@@ -3,9 +3,9 @@
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="arduinobot">
     <xacro:property name="PI" value="3.1415" />
     <!-- Not sure what exactly it is, but looks to be maximum torque that controller can use to move the robot -->
-    <xacro:property name="effort" value="3.1415" />
+    <xacro:property name="effort" value="30.0" />
     <!-- For revolute joints, velocity in rads/s. For prismatic, velocity is in m/s -->
-    <xacro:property name="velocity" value="3.1415" />
+    <xacro:property name="velocity" value="10.0" />
 
     
     
@@ -46,6 +46,21 @@
         </collision>
     </link>
 
+    <link name="forward_drive">
+        <visual>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://bot_description/meshes/forward_drive.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <geometry>
+                <mesh filename="package://bot_description/meshes/forward_drive.STL" scale="0.01 0.01 0.01"/>
+            </geometry>
+        </collision>
+    </link>
+
     <joint name="joint_1" type="fixed">
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
         <parent link="World"/>
@@ -57,7 +72,15 @@
         <parent link="base_link"/>
         <child link="base_plate"/>
         <axis xyz="0 0 1"/>
-        <limit lower="-${PI/2}" upper="${PI/2}" effort="1.0" velocity="10.0"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
+    </joint>
+
+    <joint name="joint_3" type="revolute">
+        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+        <parent link="base_plate"/>
+        <child link="forward_drive"/>
+        <axis xyz="1 0 0"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
     </joint>
     
 </robot>
