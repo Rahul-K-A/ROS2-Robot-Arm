@@ -10,7 +10,7 @@
     
     
     
-    <link name="World"/>
+    <link name="world"/>
     
     <link name="base_link">
         <visual>
@@ -48,26 +48,26 @@
 
     <link name="forward_drive">
         <visual>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.15 0.1 -0.07" rpy="${PI/2} -${PI/2} 0.0"/>
             <geometry>
-                <mesh filename="package://bot_description/meshes/forward_drive.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://bot_description/meshes/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </visual>
         <collision>
-            <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+            <origin xyz="0.15 0.1 -0.07" rpy="${PI/2} -${PI/2} 0.0"/>
             <geometry>
-                <mesh filename="package://bot_description/meshes/forward_drive.STL" scale="0.01 0.01 0.01"/>
+                <mesh filename="package://bot_description/meshes/forward_drive_arm.STL" scale="0.01 0.01 0.01"/>
             </geometry>
         </collision>
     </link>
 
-    <joint name="joint_1" type="fixed">
+    <joint name="virtual_joint" type="fixed">
         <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
-        <parent link="World"/>
+        <parent link="world"/>
         <child link="base_link"/>
     </joint>
 
-    <joint name="joint_2" type="revolute">
+    <joint name="joint_1" type="revolute">
         <origin xyz="0.0 0.0 0.307" rpy="0.0 0.0 0.0"/>
         <parent link="base_link"/>
         <child link="base_plate"/>
@@ -75,8 +75,8 @@
         <limit lower="-${PI/2}" upper="${PI/2}" effort="${effort}" velocity="${velocity}"/>
     </joint>
 
-    <joint name="joint_3" type="revolute">
-        <origin xyz="0.0 0.0 0.0" rpy="0.0 0.0 0.0"/>
+    <joint name="joint_2" type="revolute">
+        <origin xyz="0.02 0.0 0.35" rpy="0.0 0.0 0.0"/>
         <parent link="base_plate"/>
         <child link="forward_drive"/>
         <axis xyz="1 0 0"/>
